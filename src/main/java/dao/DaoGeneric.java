@@ -38,9 +38,22 @@ public class DaoGeneric<E> {
 		// Criando a transação
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin(); // Inicia a transação
-		E entidadeSalva = entityManager.merge(entidade); // Atualizando no banco usando o método merge passando a entidade.
+		E entidadeSalva = entityManager.merge(entidade); // Atualizando no banco usando o método merge passando a
+															// entidade.
 		transaction.commit();
 		return entidadeSalva;
 	}
 
+	// Criando o delete
+	public void deletarPorId(E entidade) {
+		Object id = HibernateUtil.getPrimaryKey(entidade);
+
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		entityManager
+				.createNativeQuery(
+						"delete from " + entidade.getClass().getSimpleName().toLowerCase() + " where id =" + id)
+				.executeUpdate();// Faz o delete
+		transaction.commit();//Grava a alteração no banco.
+	}
 }
