@@ -46,4 +46,18 @@ public class TesteHibernate {
 		// System.out.println("Projeto Maven - Hibernate Rodando!");
 		// HibernateUtil.geEntityManager();
 	}
+
+	@Test
+	public void testeUpdate() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		UsuarioPessoa pessoa = daoGeneric.pesquisar2(2L, UsuarioPessoa.class);
+		pessoa.setIdade(99);
+		pessoa.setNome("Nome atualizado hibernate");
+		pessoa.setSenha("123mudar");
+
+		daoGeneric.updateMerge(pessoa);
+
+		System.out.println(pessoa);
+
+	}
 }
