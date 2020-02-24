@@ -21,7 +21,7 @@ public class TesteHibernate {
 		pessoa.setLogin("teste");
 		pessoa.setNome("Erik 5");
 		pessoa.setSenha("123");
-		pessoa.setSobrenome("Marques");
+		pessoa.setSobrenome("teste");
 		pessoa.setEmail("teste@teste.com.br");
 
 		daoGeneric.salvar(pessoa);
@@ -97,15 +97,30 @@ public class TesteHibernate {
 		}
 	}
 
-	//Retorna todos os ids cadastrados na tabela
+	// Retorna todos os ids cadastrados na tabela, os métodos podem ser alterados
+	// para que a função seja outra.
 	@Test
 	public void testeQueryListMaxResult() {
 		// Sempre iniciar o DaoGeneric
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 		// Carregando uma lista de UsuarioPessoa
-		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
-				.createQuery(" from UsuarioPessoa order by id").setMaxResults(3).getResultList();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa order by id")
+				.setMaxResults(3).getResultList();
 		// Iterando o objeto pessoa com um foreach
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+		}
+	}
+
+	// Passando parâmetros para a lista com queryes condicionas customizada, mais de uma opção de customização do sql
+	@Test
+	public void testeQueryListParameter() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		@SuppressWarnings("unchecked")
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createQuery("from UsuarioPessoa where nome = :nome and sobrenome = :sobrenome")//Pode ser usado or, and e etc
+				.setParameter("nome", "Erik").setParameter("sobrenome", "Marques").getResultList();
+
 		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
 		}
