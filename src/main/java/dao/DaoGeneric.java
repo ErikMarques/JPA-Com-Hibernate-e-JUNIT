@@ -68,6 +68,9 @@ public class DaoGeneric<E> {
 		transaction.commit();
 
 		return lista;
-
+	}
+//Método get para ser acessado de outras classes
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 }

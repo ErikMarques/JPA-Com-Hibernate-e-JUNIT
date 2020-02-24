@@ -76,10 +76,24 @@ public class TesteHibernate {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 
 		List<UsuarioPessoa> list = daoGeneric.listar(UsuarioPessoa.class);
-		
+
 		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
 			System.out.println("------------------------------------------------------------");
 		}
 	}
+
+	// Teste QHL
+	@Test
+	public void testeQueryList() {
+		// Sempre iniciar o DaoGeneric
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		//Carregando uma lista de UsuarioPessoa
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa where nome = 'Erik 5'").getResultList();
+		//Iterando o objeto pessoa com um foreach
+		for(UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+		}
+	}
+
 }
