@@ -19,9 +19,9 @@ public class TesteHibernate {
 
 		pessoa.setIdade(45);
 		pessoa.setLogin("teste");
-		pessoa.setNome("Erik 5");
+		pessoa.setNome("Luis Paulo");
 		pessoa.setSenha("123");
-		pessoa.setSobrenome("teste");
+		pessoa.setSobrenome("Candido");
 		pessoa.setEmail("teste@teste.com.br");
 
 		daoGeneric.salvar(pessoa);
@@ -41,7 +41,7 @@ public class TesteHibernate {
 	@Test
 	public void testeBuscar2() {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		UsuarioPessoa pessoa = daoGeneric.pesquisar2(2L, UsuarioPessoa.class);
+		UsuarioPessoa pessoa = daoGeneric.pesquisar2(9L, UsuarioPessoa.class);
 
 		System.out.println(pessoa);
 
@@ -84,6 +84,7 @@ public class TesteHibernate {
 	}
 
 	// Teste QHL
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testeQueryList() {
 		// Sempre iniciar o DaoGeneric
@@ -99,6 +100,7 @@ public class TesteHibernate {
 
 	// Retorna todos os ids cadastrados na tabela, os métodos podem ser alterados
 	// para que a função seja outra.
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testeQueryListMaxResult() {
 		// Sempre iniciar o DaoGeneric
@@ -138,5 +140,31 @@ public class TesteHibernate {
 				.getSingleResult();
 
 		System.out.println("Soma de todas as idades: " + somaIdade);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testeNameQuery1() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createNamedQuery("UsuarioPessoa.todos")
+				.getResultList();
+
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testeNameQuery2() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createNamedQuery("UsuarioPessoa.buscaPorNome")
+				.setParameter("nome", "Luis Paulo").getResultList();
+
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+
+		}
 	}
 }

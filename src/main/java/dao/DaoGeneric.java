@@ -23,6 +23,7 @@ public class DaoGeneric<E> {
 
 	// Criando a consulta
 
+	@SuppressWarnings("unchecked")
 	public E pesquisar(E entidade) {
 		Object id = HibernateUtil.getPrimaryKey(entidade);
 
@@ -60,6 +61,7 @@ public class DaoGeneric<E> {
 	}
 
 //Carrega a lista de dados
+	@SuppressWarnings("unchecked")
 	public List<E> listar(Class<E> entidade) {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();

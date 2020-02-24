@@ -4,8 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-@Entity // Identificando que a classe é uma tabela no banco de dados com esta anotação
+//@Entity identifica que a classe é uma tabela no banco de dados com esta anotação.
+//O nome da query identifica a classe que está sendo chamada em outros locais do projeto.
+@Entity
+@NamedQueries({
+	@NamedQuery(name = "UsuarioPessoa.todos", query = "select u from UsuarioPessoa u"),
+	@NamedQuery(name = "UsuarioPessoa.buscaPorNome", query = "select u from UsuarioPessoa u where u.nome = :nome")
+
+})
+
 public class UsuarioPessoa {
 
 	@Id
