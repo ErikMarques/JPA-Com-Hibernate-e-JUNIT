@@ -112,17 +112,31 @@ public class TesteHibernate {
 		}
 	}
 
-	// Passando parâmetros para a lista com queryes condicionas customizada, mais de uma opção de customização do sql
+	// Passando parâmetros para a lista com queryes condicionas customizada, mais de
+	// uma opção de customização do sql
 	@Test
 	public void testeQueryListParameter() {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 		@SuppressWarnings("unchecked")
 		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
-				.createQuery("from UsuarioPessoa where nome = :nome and sobrenome = :sobrenome")//Pode ser usado or, and e etc
+				.createQuery("from UsuarioPessoa where nome = :nome and sobrenome = :sobrenome")// Pode ser usado or,
+																								// and e etc
 				.setParameter("nome", "Erik").setParameter("sobrenome", "Marques").getResultList();
 
 		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
 		}
+	}
+
+	@Test
+	public void testeQuerySomaIdade() {// Exemplo de soma de todas as idades contidas na tabela.
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		// Este retorno Long vai variar de acordo com o banco de dados que é utilizado.
+		// A função NUM retorna a soma de valores de uma coluna.
+		// A função AVG retorna a média de valores de uma coluna.
+		Long somaIdade = (Long) daoGeneric.getEntityManager().createQuery("select sum(u.idade) from UsuarioPessoa u")
+				.getSingleResult();
+
+		System.out.println("Soma de todas as idades: " + somaIdade);
 	}
 }
