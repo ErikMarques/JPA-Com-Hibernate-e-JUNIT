@@ -88,12 +88,26 @@ public class TesteHibernate {
 	public void testeQueryList() {
 		// Sempre iniciar o DaoGeneric
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		//Carregando uma lista de UsuarioPessoa
-		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa where nome = 'Erik 5'").getResultList();
-		//Iterando o objeto pessoa com um foreach
-		for(UsuarioPessoa usuarioPessoa : list) {
+		// Carregando uma lista de UsuarioPessoa
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createQuery(" from UsuarioPessoa where nome = 'Erik 5'").getResultList();
+		// Iterando o objeto pessoa com um foreach
+		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
 		}
 	}
 
+	//Retorna todos os ids cadastrados na tabela
+	@Test
+	public void testeQueryListMaxResult() {
+		// Sempre iniciar o DaoGeneric
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		// Carregando uma lista de UsuarioPessoa
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createQuery(" from UsuarioPessoa order by id").setMaxResults(3).getResultList();
+		// Iterando o objeto pessoa com um foreach
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+		}
+	}
 }
