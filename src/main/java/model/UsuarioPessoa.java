@@ -1,18 +1,20 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 //@Entity identifica que a classe é uma tabela no banco de dados com esta anotação.
 //O nome da query identifica a classe que está sendo chamada em outros locais do projeto.
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "UsuarioPessoa.todos", query = "select u from UsuarioPessoa u"),
-	@NamedQuery(name = "UsuarioPessoa.buscaPorNome", query = "select u from UsuarioPessoa u where u.nome = :nome")
+@NamedQueries({ @NamedQuery(name = "UsuarioPessoa.todos", query = "select u from UsuarioPessoa u"),
+		@NamedQuery(name = "UsuarioPessoa.buscaPorNome", query = "select u from UsuarioPessoa u where u.nome = :nome")
 
 })
 
@@ -28,6 +30,9 @@ public class UsuarioPessoa {
 	private String login;
 	private String senha;
 	private int idade;
+
+	@OneToMany(mappedBy = "usuarioPessoa")
+	private List<TelefoneUser> telefoneUsers;
 
 	public Long getId() {
 		return id;
@@ -85,9 +90,18 @@ public class UsuarioPessoa {
 		this.idade = idade;
 	}
 
+	public List<TelefoneUser> getTelefoneUsers() {
+		return telefoneUsers;
+	}
+
+	public void setTelefoneUsers(List<TelefoneUser> telefoneUsers) {
+		this.telefoneUsers = telefoneUsers;
+	}
+
 	@Override
 	public String toString() {
 		return "UsuarioPessoa [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", email=" + email
-				+ ", login=" + login + ", senha=" + senha + ", idade=" + idade + "]";
+				+ ", login=" + login + ", senha=" + senha + ", idade=" + idade + ", telefoneUsers=" + telefoneUsers
+				+ "]";
 	}
 }

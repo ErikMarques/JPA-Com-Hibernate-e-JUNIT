@@ -19,9 +19,9 @@ public class TesteHibernate {
 
 		pessoa.setIdade(45);
 		pessoa.setLogin("teste");
-		pessoa.setNome("Luis Paulo");
+		pessoa.setNome("Dan");
 		pessoa.setSenha("123");
-		pessoa.setSobrenome("Candido");
+		pessoa.setSobrenome("Marques");
 		pessoa.setEmail("teste@teste.com.br");
 
 		daoGeneric.salvar(pessoa);
